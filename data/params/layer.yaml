@@ -1,0 +1,106 @@
+farm_type: layer
+params:
+  shed_cost_per_sqft:
+    value: null
+    unit: INR/sqft
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO: extension publication or district ARD office"
+    verified: false
+  space_per_bird_sqft:
+    value: null
+    unit: sqft/bird
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  pullet_cost_per_bird:
+    value: null
+    unit: INR/bird
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  rearing_months_before_laying:
+    value: null
+    unit: months
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  laying_rate_percent:
+    value: null
+    unit: percent
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  feed_g_per_bird_per_day:
+    value: null
+    unit: g/bird/day
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  feed_price_per_kg:
+    value: null
+    unit: INR/kg
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  egg_price_inr:
+    value: null
+    unit: INR/egg
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO: farm-gate price"
+    verified: false
+  mortality_percent:
+    value: null
+    unit: percent
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  cull_bird_price_inr:
+    value: null
+    unit: INR/bird
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO: not yet used by lib/calc"
+    verified: false
+  monthly_labour_inr:
+    value: null
+    unit: INR/month
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  monthly_electricity_inr:
+    value: null
+    unit: INR/month
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  monthly_misc_inr:
+    value: null
+    unit: INR/month
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO: vaccines and misc"
+    verified: false

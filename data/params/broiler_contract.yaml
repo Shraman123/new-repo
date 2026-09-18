@@ -1,0 +1,82 @@
+farm_type: broiler_contract
+params:
+  shed_cost_per_sqft:
+    value: null
+    unit: INR/sqft
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  space_per_bird_sqft:
+    value: null
+    unit: sqft/bird
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  batch_days:
+    value: null
+    unit: days
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  cleaning_gap_days:
+    value: null
+    unit: days
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  final_weight_kg:
+    value: null
+    unit: kg/bird
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  growing_charge_per_kg_inr:
+    value: null
+    unit: INR/kg
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO: confirm how this works locally with farmers (SPEC §5)"
+    verified: false
+  mortality_percent:
+    value: null
+    unit: percent
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  monthly_labour_inr:
+    value: null
+    unit: INR/month
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  monthly_electricity_inr:
+    value: null
+    unit: INR/month
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO"
+    verified: false
+  monthly_misc_inr:
+    value: null
+    unit: INR/month
+    low: null
+    high: null
+    source: ""
+    page_or_note: "TODO: vaccines and misc"
+    verified: false
