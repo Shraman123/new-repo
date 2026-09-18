@@ -91,7 +91,7 @@ export async function POST(request: Request) {
           sseEvent("done", {
             sessionId: consented ? sessionId : undefined,
             history: consented ? undefined : result.history,
-            toolCalls: result.toolCalls.map((t) => ({ name: t.name })),
+            toolCalls: result.toolCalls.filter((t) => t.name !== "log_event").map((t) => ({ name: t.name, output: t.output })),
           })
         )
       );

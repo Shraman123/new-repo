@@ -24,6 +24,7 @@ export interface FindSchemesResult {
     name_en: string;
     status: string;
     reason_bn: string;
+    verified: boolean;
     citation: { file: string; page: number | null }[];
   }[];
   missingProfileFields: string[];
@@ -40,6 +41,7 @@ export function findSchemesHandler(profile: UserProfile): FindSchemesResult {
       name_en: m.card.name_en,
       status: m.status,
       reason_bn: m.reasons.find((r) => r.status !== "unknown")?.rule_bn ?? m.card.benefit.summary_bn,
+      verified: m.card.verified,
       citation: m.reasons.filter((r) => r.page !== null).map((r) => ({ file: m.card.source.file, page: r.page })),
     })),
     missingProfileFields,
@@ -65,12 +67,13 @@ export interface GetDocumentsResult {
   found: boolean;
   documents: { name_bn: string; page: number | null }[];
   sourceFile?: string;
+  verified?: boolean;
 }
 
 export function getDocumentsHandler(schemeId: string): GetDocumentsResult {
   const card = findCard(schemeId);
   if (!card) return { found: false, documents: [] };
-  return { found: true, documents: card.documents, sourceFile: card.source.file };
+  return { found: true, documents: card.documents, sourceFile: card.source.file, verified: card.verified };
 }
 
 export interface GetOfficeResult {
@@ -78,6 +81,7 @@ export interface GetOfficeResult {
   office_bn?: string;
   address?: string;
   phone?: string;
+  verified?: boolean;
 }
 
 export function getOfficeHandler(district: string, block: string): GetOfficeResult {
@@ -85,7 +89,7 @@ export function getOfficeHandler(district: string, block: string): GetOfficeResu
   for (const { data } of files) {
     if (data.district.trim().toLowerCase() !== district.trim().toLowerCase()) continue;
     const match = data.blocks.find((b) => b.block.trim().toLowerCase() === block.trim().toLowerCase());
-    if (match) return { found: true, office_bn: match.office_bn, address: match.address, phone: match.phone };
+    if (match) return { found: true, office_bn: match.office_bn, address: match.address, phone: match.phone, verified: match.verified };
   }
   return { found: false };
 }
