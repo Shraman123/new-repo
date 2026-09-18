@@ -12,6 +12,9 @@ export const sessions = pgTable("sessions", {
   stage: text("stage").notNull().default("greeting"),
   consent: boolean("consent").notNull().default(false),
   lang: text("lang").notNull().default("bn"),
+  // True only for rows scripts/seed-synthetic.ts wrote, so /admin can show
+  // the SYNTHETIC banner (SPEC §7) whenever any are in the filtered view.
+  synthetic: boolean("synthetic").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
@@ -22,6 +25,7 @@ export const events = pgTable("events", {
   sessionId: uuid("session_id").notNull(),
   stage: text("stage").notNull(),
   data: jsonb("data").notNull().default({}),
+  synthetic: boolean("synthetic").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
