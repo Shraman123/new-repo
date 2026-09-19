@@ -2,7 +2,7 @@ import type Anthropic from "@anthropic-ai/sdk";
 import { MODELS, TOOL_LOOP_MAX_ITERATIONS } from "../config";
 import type { UserProfile } from "../schemes/eligibility";
 import { findUncitedFigures, SAFE_FALLBACK_BN } from "./guardrails";
-import { SYSTEM_PROMPT } from "./prompt";
+import { buildSystemPrompt, type Channel } from "./prompt";
 import { AGENT_TOOLS } from "./tools";
 import {
   checkEligibilityHandler,
@@ -37,6 +37,7 @@ export interface RunAgentTurnOptions {
   client: AgentClient;
   onLogEvent?: (stage: string, data: Record<string, unknown>) => void;
   maxIterations?: number;
+  channel?: Channel;
 }
 
 const PROFILE_KEYS: (keyof UserProfile)[] = [
@@ -118,6 +119,7 @@ export async function runAgentTurn(
   options: RunAgentTurnOptions
 ): Promise<AgentTurnResult> {
   const maxIterations = options.maxIterations ?? TOOL_LOOP_MAX_ITERATIONS;
+  const systemPrompt = buildSystemPrompt(options.channel);
   const messages: Anthropic.MessageParam[] = [...history, { role: "user", content: userMessage }];
   const toolCalls: ToolCallRecord[] = [];
   const profileUpdates: Partial<UserProfile> = {};
@@ -127,14 +129,14 @@ export async function runAgentTurn(
     const response = await options.client.messages.create({
       model: MODELS.agent,
       max_tokens: 1024,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       tools: AGENT_TOOLS,
       messages,
     });
 
     if (response.stop_reason !== "tool_use") {
       const replyText = textOf(response);
-      return finalizeReply(replyText, messages, toolCalls, profileUpdates, toolResultsText, options);
+      return finalizeReply(replyText, messages, toolCalls, profileUpdates, toolResultsText, systemPrompt, options);
     }
 
     const toolUseBlocks = response.content.filter((b): b is Anthropic.ToolUseBlock => b.type === "tool_use");
@@ -167,6 +169,7 @@ async function finalizeReply(
   toolCalls: ToolCallRecord[],
   profileUpdates: Partial<UserProfile>,
   toolResultsText: string,
+  systemPrompt: string,
   options: RunAgentTurnOptions
 ): Promise<AgentTurnResult> {
   let finalText = replyText;
@@ -177,7 +180,7 @@ async function finalizeReply(
     const retry = await options.client.messages.create({
       model: MODELS.agent,
       max_tokens: 1024,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       tools: AGENT_TOOLS,
       messages: [
         ...messages,

@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import type Anthropic from "@anthropic-ai/sdk";
 import { runAgentTurn, type AgentClient } from "../loop";
 import { SAFE_FALLBACK_BN } from "../guardrails";
+import { buildSystemPrompt } from "../prompt";
 
 function textMessage(text: string): Anthropic.Message {
   return {
@@ -89,5 +90,15 @@ describe("runAgentTurn", () => {
     await runAgentTurn([], "রাজি", { client, onLogEvent });
 
     expect(onLogEvent).toHaveBeenCalledWith("consented", { lang: "bn" });
+  });
+
+  it("uses the voice system prompt when channel is 'voice', web otherwise", async () => {
+    const client = fakeClient([textMessage("নমস্কার।")]);
+    await runAgentTurn([], "হ্যালো", { client, channel: "voice" });
+    expect(client.messages.create).toHaveBeenCalledWith(expect.objectContaining({ system: buildSystemPrompt("voice") }));
+
+    const client2 = fakeClient([textMessage("নমস্কার।")]);
+    await runAgentTurn([], "হ্যালো", { client: client2 });
+    expect(client2.messages.create).toHaveBeenCalledWith(expect.objectContaining({ system: buildSystemPrompt("web") }));
   });
 });

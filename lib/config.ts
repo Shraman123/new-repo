@@ -5,6 +5,12 @@ export const MODELS = {
 
 export const CHAT_MESSAGE_WORD_LIMIT = 80;
 
+// A caller can't re-read a long sentence, so the voice channel gets a
+// tighter budget than text (PROMPTS.md Phase 5: "≤2 short spoken turns
+// per exchange").
+export const VOICE_MESSAGE_WORD_LIMIT = 30;
+export const VOICE_MAX_SPOKEN_TURNS = 2;
+
 export const TOOL_LOOP_MAX_ITERATIONS = 6;
 
 export const DEMO_MODE = process.env.DEMO_MODE === "true";

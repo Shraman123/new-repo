@@ -12,6 +12,7 @@ const RequestSchema = z.object({
   message: z.string().min(1).max(2000),
   consent: z.boolean().optional(),
   lang: z.string().optional(),
+  channel: z.enum(["web", "voice", "whatsapp"]).default("web"),
   // Only used when consent is false/absent: the client keeps its own
   // history, since we store nothing server-side without consent.
   history: z.array(z.record(z.string(), z.unknown())).optional(),
@@ -62,6 +63,7 @@ export async function POST(request: Request) {
   const result = await runAgentTurn(history, redactedMessage, {
     client: getAnthropicClient(),
     onLogEvent: canLog ? (stage, data) => void logEvent(sessionId!, stage, data) : undefined,
+    channel: body.channel,
   });
 
   if (consented && dbAvailable && sessionId) {
