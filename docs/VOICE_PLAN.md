@@ -1,9 +1,16 @@
 # Voice via Vaani — plan
 
 Phase 5 per PROMPTS.md: study `github.com/Shraman123/AI-Call-Centre` ("Vaani"),
-then plan the voice channel here. **This is the planning document only** —
-PROMPTS.md says to stop and wait for OK before implementing in `../vaani`,
-so nothing in `../vaani` has been touched.
+then plan the voice channel here.
+
+**Status: implemented.** The plan below was written and approved first;
+implementation then went into `github.com/Shraman123/AI-Call-Centre` on a
+`khamarmitra-voice` branch (pushed — see that repo's README.md for what it
+does and, importantly, the list of things still unverified against real
+Exotel/Sarvam accounts, since none exist in this environment). This repo's
+own `/api/agent` change (the `channel` field and the voice system prompt)
+is already merged into the branch this was built on — see docs/DECISIONS.md's
+Phase 5 entries.
 
 ## What Vaani actually is
 
@@ -222,5 +229,8 @@ later if pilot feedback shows real demand for it.
 
 ---
 
-Stopping here per PROMPTS.md. Once you're OK with this plan, next step is
-implementing it in `../vaani` on a new branch `khamarmitra-voice`.
+Implemented on `khamarmitra-voice` in `github.com/Shraman123/AI-Call-Centre`.
+Open questions 1-4 above are still genuinely open — they need a live Exotel
+account, a live Sarvam AI key, and a real test call, none of which exist in
+this environment. Nothing here should be treated as "confirmed working"
+until those are checked.
